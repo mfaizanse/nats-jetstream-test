@@ -31,7 +31,7 @@ func main() {
 		// Create a Stream
 		_, err = js.AddStream(&nats.StreamConfig{
 			Name:     streamName,
-			Subjects: []string{subjectPrefix + ".*"},
+			Subjects: []string{subjectPrefix + ".>"},
 		})
 		if err != nil {
 			log.Fatalln(err)
@@ -66,11 +66,4 @@ func main() {
 		log.Println("Published to Stream: " + ack.Stream)
 		time.Sleep(1 * time.Second)
 	}
-
-	//// Delete Consumer
-	//js.DeleteConsumer("ORDERS", "MONITOR")
-	//
-	//// Delete Stream
-	//js.DeleteStream("ORDERS")
-
 }

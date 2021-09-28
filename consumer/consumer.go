@@ -23,7 +23,7 @@ func main() {
 	// streamName := "STREAM1"
 	subjectPrefix := "EVENTING"
 
-	eventType := subjectPrefix + ".*"
+	eventType := subjectPrefix + ".>"
 	// Simple Async Ephemeral Consumer
 	js.Subscribe(eventType, func(m *nats.Msg) {
 		fmt.Printf("Subject %s,  Message: %s\n", m.Subject, string(m.Data))
