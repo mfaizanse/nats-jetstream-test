@@ -52,12 +52,18 @@ func main() {
 		m.Ack()
 	}
 
+	//syncCallback := func(m *nats.Msg) {
+	//	eventHandlerCallback(m)
+	//}
+
+	asyncCallback := func(m *nats.Msg) {
+		go eventHandlerCallback(m)
+	}
+
 	// Create/bind Async Durable Consumer
 	_, err = js.Subscribe(
 		eventType,
-		func(m *nats.Msg) {
-			go eventHandlerCallback(m)
-		},
+		asyncCallback,
 		nats.Durable("consumer1"),
 		nats.ManualAck(),
 		nats.AckExplicit(),

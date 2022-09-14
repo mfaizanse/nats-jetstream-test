@@ -38,7 +38,7 @@ func main() {
 		log.Println("Created stream: " + streamName)
 	}
 
-	for i := 0; i < 500; i++ {
+	for i := 0; i < 30; i++ {
 		msg := fmt.Sprintf("msg-%d", i)
 		eventType1 := subjectPrefix + ".one"
 		// eventType2 := subjectPrefix + ".one.two"
@@ -63,7 +63,7 @@ func main() {
 		// 	log.Println(err)
 		// }
 
-		log.Println("Published to Stream: " + ack.Stream)
+		fmt.Printf("Published to Stream: %s, Subject: %s,  Message: %s\n", ack.Stream, eventType1, msg)
 		time.Sleep(1 * time.Second)
 	}
 }
