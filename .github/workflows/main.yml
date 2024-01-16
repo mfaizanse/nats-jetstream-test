@@ -10,6 +10,7 @@ on:
 jobs:
   job-a:
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request_target'
     outputs:
       image-name: ${{ steps.extract-image.outputs.image_name }}
     steps:
