@@ -1,0 +1,44 @@
+name: e2e
+on:
+  pull_request:
+    branches:
+      - main
+  pull_request_target:
+    branches:
+      - main
+
+jobs:
+  job-a:
+    runs-on: ubuntu-latest
+    outputs:
+      image-name: ${{ steps.extract-image.outputs.image_name }}
+    steps:
+      - name: test output
+        id: extract-image
+        run: |
+          export IMAGE_NAME="docker.com"
+          echo "image_name=${IMAGE_NAME}" >> "$GITHUB_OUTPUT"
+
+  job1:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request_target'
+    needs: job-a
+    env:
+      MANAGER_IMAGE: ${{ needs.job-a.outputs.image-name }}
+
+    steps:
+      - name: test1
+        run: |
+          echo "hello world"
+          echo "MANAGER_IMAGE: ${MANAGER_IMAGE}"
+
+  job2:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    needs: job-a
+    env:
+      MANAGER_IMAGE: ${{ needs.job-a.outputs.image-name }}
+    steps:
+      - name: test1
+        run: |
+          echo "MANAGER_IMAGE: ${MANAGER_IMAGE}"
