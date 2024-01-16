@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	// Connect to NATS test1
+	// Connect to NATS test2
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
 		log.Fatalln(err)
