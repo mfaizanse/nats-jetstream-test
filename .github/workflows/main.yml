@@ -9,7 +9,7 @@ jobs:
       - name: test output
         id: extract-image
         env:
-          REF: ${{ github.ref }}
+          REF: ${{ github.ref_name }}
           JOB_NAME: ${{ github.ref_name == 'main' && 'post-eventing-manager-build' || 'release-eventing-manager-build' }}
         run: |
           echo "JOB_NAME=${JOB_NAME}"
