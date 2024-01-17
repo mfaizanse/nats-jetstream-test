@@ -9,7 +9,8 @@ jobs:
       - name: test output
         id: extract-image
         env:
+          REF: ${{ github.ref }}
           JOB_NAME: ${{ github.ref == 'main' && 'post-eventing-manager-build' || 'release-eventing-manager-build' }}
         run: |
-          export IMAGE_NAME="docker.com"
           echo "JOB_NAME=${JOB_NAME}"
+          echo "REF=${REF}"
