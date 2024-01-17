@@ -5,22 +5,11 @@ on:
 jobs:
   job-a:
     runs-on: ubuntu-latest
-    outputs:
-      image-name: ${{ steps.extract-image.outputs.image_name }}
     steps:
       - name: test output
         id: extract-image
+        env:
+          JOB_NAME: ${{ github.ref == 'main' && 'post-eventing-manager-build' || 'release-eventing-manager-build' }}
         run: |
           export IMAGE_NAME="docker.com"
-          echo "image_name=${IMAGE_NAME}" >> "$GITHUB_OUTPUT"
-
-  job1:
-    runs-on: ubuntu-latest
-    needs: job-a
-    env:
-      MANAGER_IMAGE: ${{ needs.job-a.outputs.image-name }}
-    steps:
-      - name: test1
-        run: |
-          echo "hello world"
-          echo "MANAGER_IMAGE: ${MANAGER_IMAGE}"
+          echo "JOB_NAME=${JOB_NAME}"
